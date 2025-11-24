@@ -4,6 +4,10 @@ services:
   web:
     build: .
     command: uvicorn main:booking_app --host 0.0.0.0 --port 8001
+    volumes:
+      - .:/app
+      - /home/ubuntu/booking_app_FatsAPI/hotel_app/staticfiles:/app/static
+      - media_volume:/app/media
     ports:
       - "8001:8001"
     depends_on:
@@ -21,5 +25,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /home/ubuntu/booking_app_FatsAPI/hotel_app/staticfiles:/app/static
+      - media_volume:/app/media
+    depends_on:
+      - web
+
 volumes:
   postgres_data:
+  media_volume:
