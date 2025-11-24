@@ -4,12 +4,10 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /hotel_app
 
-COPY req.txt .x
+COPY req.txt /hotel_app/
 
 RUN pip install --upgrade pip && \
     pip install -r req.txt
 
 
-COPY hotel_app .
-
-CMD ["uvicorn", "8001", "--host", "0.0.0.0", "--port"]
+COPY . /hotel_app/
